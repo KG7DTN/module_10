@@ -63,17 +63,22 @@ class SelfClosingTag(Element):
 class Br(SelfClosingTag):
     tag = "br"
 
-class Hr(Element):
+class Hr(SelfClosingTag):
     tag = "hr"
 
 class OneLineTag(Element):
     def render(self, out_file, ind=""):
-        for content in self.contents:
-            if hasattr(content, 'render'):
-                content.render(f'{ind}out_file')
-            else:
-                if content is not None:
-                    out_file.write(f"{ind}<{self.tag}>{content}</{self.tag}>\n")
+        attr_str = ''.join(f' {key}="{value}"' for key, value in self.attributes.items())
+        out_file.write(f"{ind}<{self.tag}{attr_str}>")
+        if self.contents:
+            out_file.write(str(self.contents[0]))
+        out_file.write(f"</{self.tag}>\n")
 
 class Title(OneLineTag):
     tag = 'title'
+
+class A(OneLineTag):
+    tag = 'a'
+
+    def __init__(self, link, text):
+        super().__init__(text, href=link)
