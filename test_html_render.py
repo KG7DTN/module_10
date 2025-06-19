@@ -180,7 +180,32 @@ def test_sub_element():
 # Step 3
 ########
 
-# Add your tests here!
+def test_H():
+    '''tests the heading functionality'''
+    h_test = H(2, 'my heading')
+    output_test = render_result(h_test)
+    assert output_test.startswith('<h2>')
+    assert output_test.endswith('</h2>\n')
+
+def test_A():
+    '''tests the links and link attributes'''
+    a_test = A("http://google.com", "link")
+    output_test = render_result(a_test)
+    assert output_test.startswith('<a href="http://google.com">link</a>')
+
+def test_Meta():
+    '''tests the one liner Meta tag'''
+    meta = Meta(charset="UTF-8")
+    output_test = render_result(meta)
+    assert output_test.startswith('<meta charset="UTF-8" />\n')
+
+def test_Ul():
+    '''tests lists and their functionality'''
+    ul = Ul()
+    ul.append(Li('Thing'))
+    output_test = render_result(ul)
+    assert output_test.startswith('<ul>\n    <li>\n        Thing\n    </li>\n</ul>\n')
+
 
 # #####################
 # # indentation testing
