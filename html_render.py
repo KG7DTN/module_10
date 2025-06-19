@@ -68,7 +68,7 @@ class SelfClosingTag(Element):
         else:
             out_file.write(f"{ind}<{self.tag} />\n")
 
-class Meta(Element):
+class Meta(SelfClosingTag):
     '''meta tag handling'''
     tag = 'meta'
 
